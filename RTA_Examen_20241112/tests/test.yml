@@ -1,0 +1,6 @@
+---
+- name: Ejecutar tareas de Ansible para Punto D
+  hosts: localhost
+  become: yes
+  tasks:
+    - import_tasks: ../tasks/main.yml

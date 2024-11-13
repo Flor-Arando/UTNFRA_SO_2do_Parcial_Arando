@@ -1,0 +1,26 @@
+---
+- name: Crear directorios en /tmp/2do_parcial/
+  file:
+    path: "/tmp/2do_parcial/{{ item }}"
+    state: directory
+  loop:
+    - "alumno"
+    - "equipo"
+
+- name: Crear archivo datos_alumno.txt desde template
+  template:
+    src: ../templates/template_alumno.j2
+    dest: /tmp/2do_parcial/alumno/datos_alumno.txt
+
+- name: Crear archivo datos_equipo.txt desde template
+  template:
+    src: ../templates/template_equipo.j2
+    dest: /tmp/2do_parcial/equipo/datos_equipo.txt
+
+- name: Configurar sudoers para grupo 2PSupervisores sin password
+  become: yes
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: "%2PSupervisores ALL=(ALL) NOPASSWD: ALL"
+    validate: 'visudo -cf %s'
